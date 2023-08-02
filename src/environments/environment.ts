@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  rooturl : 'https://bank-api.greeta.net'
+  rooturl : 'https://account.greeta.net/bank'
 };
 
 /*
