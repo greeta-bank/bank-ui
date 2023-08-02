@@ -21,8 +21,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         url: 'https://keycloak.greeta.net',
-        realm: 'eazybankdev',
-        clientId: 'eazypublicclient',
+        realm: 'bank-realm',
+        clientId: 'bank-app',
       },
       initOptions: {
         pkceMethod: 'S256',
