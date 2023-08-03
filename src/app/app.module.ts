@@ -26,8 +26,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         pkceMethod: 'S256',
+        checkLoginIframe: false,
         redirectUri: 'https://bank.greeta.net/dashboard',
-      },loadUserProfileAtStartUp: false
+      },enableBearerInterceptor: false,loadUserProfileAtStartUp: false
     });
 }
 
