@@ -20,14 +20,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'https://keycloak.greeta.net2',
+        url: 'https://keycloak.greeta.net',
         realm: 'bank-realm',
         clientId: 'bank-app',
       },
       initOptions: {
         pkceMethod: 'S256',
         redirectUri: 'https://bank.greeta.net/dashboard',
-      },loadUserProfileAtStartUp: true
+      },loadUserProfileAtStartUp: false
     });
 }
 
