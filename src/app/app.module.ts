@@ -20,7 +20,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'https://keycloak.greeta.net',
+        url: 'https://keycloak.greeta.net/',
         realm: 'bank-realm',
         clientId: 'bank-app',
       },
