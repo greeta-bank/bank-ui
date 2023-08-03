@@ -9,7 +9,7 @@ import { KeycloakProfile } from 'keycloak-js';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  
+
   user = new User();
 
   public isLoggedIn = false;
@@ -21,11 +21,12 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
+      //this.userProfile = await this.keycloak.loadUserProfile();
       this.user.authStatus = 'AUTH';
-      this.user.name = this.userProfile.firstName || "";
+      //this.user.name = this.userProfile.firstName || "";
+      this.user.name = "";
       window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
-      
+
     }
   }
 
