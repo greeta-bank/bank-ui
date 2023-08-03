@@ -18,19 +18,19 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent},
   { path: 'notices', component: NoticesComponent},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthKeyClockGuard],data: {
-    
+
   }},
   { path: 'myAccount', component: AccountComponent, canActivate: [AuthKeyClockGuard],data: {
-    roles: ['USER']
+    roles: ['BANK_USER']
   }},
   { path: 'myBalance', component: BalanceComponent, canActivate: [AuthKeyClockGuard],data: {
-    roles: ['USER','ADMIN']
+    roles: ['BANK_USER','BANK_ADMIN']
   }},
   { path: 'myLoans', component: LoansComponent, canActivate: [AuthKeyClockGuard],data: {
-    
+
   }},
   { path: 'myCards', component: CardsComponent, canActivate: [AuthKeyClockGuard],data: {
-    roles: ['USER']
+    roles: ['BANK_USER']
   }}
 ];
 
