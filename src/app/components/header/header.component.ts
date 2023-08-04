@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user.model';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { DashboardService } from '../../services/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-header',
@@ -15,17 +16,21 @@ export class HeaderComponent implements OnInit {
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
 
-  constructor(private readonly keycloak: KeycloakService) { }
+  constructor(private readonly keycloak: KeycloakService,
+    private readonly dashboardService: DashboardService) { }
 
   public async ngOnInit() {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-      this.user.authStatus = 'AUTH';
-      this.user.name = this.userProfile.firstName || "";
-      window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
-
+      this.dashboardService.loadUserProfile().subscribe(
+        responseData => {
+          this.userProfile = <any> responseData.body;
+          this.user.authStatus = 'AUTH';
+          this.user.name = this.userProfile.firstName || "";
+          this.user.email = this.userProfile.email || "";
+          window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+        });
     }
   }
 
