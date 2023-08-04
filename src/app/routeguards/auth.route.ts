@@ -31,12 +31,10 @@ export class AuthKeyClockGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }else{
-        //this.userProfile = await this.keycloak.loadUserProfile();
+        this.userProfile = await this.keycloak.loadUserProfile();
         this.user.authStatus = 'AUTH';
-        //this.user.name = this.userProfile.firstName || "";
-        //this.user.email = this.userProfile.email || "";
-        this.user.name = "";
-        this.user.email = "";
+        this.user.name = this.userProfile.firstName || "";
+        this.user.email = this.userProfile.email || "";
         window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
     }
 
