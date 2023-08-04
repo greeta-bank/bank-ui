@@ -22,9 +22,12 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.user = await <any> this.dashboardService.loadUserProfile();
-      this.user.authStatus = 'AUTH';
-      window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+      this.dashboardService.loadUserProfile().subscribe(
+        responseData => {
+          this.user = <any> responseData.body;
+          this.user.authStatus = 'AUTH';
+          window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+        });
     }
   }
 

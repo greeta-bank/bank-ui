@@ -32,9 +32,12 @@ export class AuthKeyClockGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }else{
-      this.user =  await <any> this.dashboardService.loadUserProfile();
-      this.user.authStatus = 'AUTH';
-      window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+      this.dashboardService.loadUserProfile().subscribe(
+        responseData => {
+          this.user = <any> responseData.body;
+          this.user.authStatus = 'AUTH';
+          window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
+        });
     }
 
     // Get the roles required from the route.
