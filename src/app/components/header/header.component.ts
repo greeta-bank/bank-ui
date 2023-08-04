@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
   user = new User();
 
   public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
 
   constructor(private readonly keycloak: KeycloakService,
     private readonly dashboardService: DashboardService) { }
@@ -23,14 +22,9 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.dashboardService.loadUserProfile().subscribe(
-        responseData => {
-          this.userProfile = <any> responseData.body;
-          this.user.authStatus = 'AUTH';
-          this.user.name = this.userProfile.firstName || "";
-          this.user.email = this.userProfile.email || "";
-          window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
-        });
+      this.user = await <any> this.dashboardService.loadUserProfile();
+      this.user.authStatus = 'AUTH';
+      window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
     }
   }
 

@@ -14,7 +14,6 @@ import { DashboardService } from '../services/dashboard/dashboard.service';
 })
 export class AuthKeyClockGuard extends KeycloakAuthGuard {
   user = new User();
-  public userProfile: KeycloakProfile | null = null;
   constructor(
     protected override readonly router: Router,
     protected readonly keycloak: KeycloakService,
@@ -33,14 +32,9 @@ export class AuthKeyClockGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }else{
-        this.dashboardService.loadUserProfile().subscribe(
-          responseData => {
-            this.userProfile = <any> responseData.body;
-            this.user.authStatus = 'AUTH';
-            this.user.name = this.userProfile.firstName || "";
-            this.user.email = this.userProfile.email || "";
-            window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
-          });
+      this.user =  await <any> this.dashboardService.loadUserProfile();
+      this.user.authStatus = 'AUTH';
+      window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
     }
 
     // Get the roles required from the route.
