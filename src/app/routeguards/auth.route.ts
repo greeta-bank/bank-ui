@@ -7,17 +7,16 @@ import {
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { User } from '../model/user.model';
 import { KeycloakProfile } from 'keycloak-js';
-import { DashboardService } from '../services/dashboard/dashboard.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthKeyClockGuard extends KeycloakAuthGuard {
   user = new User();
+  public userProfile: KeycloakProfile | null = null;
   constructor(
     protected override readonly router: Router,
-    protected readonly keycloak: KeycloakService,
-    private dashboardService: DashboardService
+    protected readonly keycloak: KeycloakService
   ) {
     super(router, keycloak);
   }
@@ -32,12 +31,13 @@ export class AuthKeyClockGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }else{
-      this.dashboardService.loadUserProfile().subscribe(
-        responseData => {
-          this.user = <any> responseData.body;
-          this.user.authStatus = 'AUTH';
-          window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
-        });
+        //this.userProfile = await this.keycloak.loadUserProfile();
+        this.user.authStatus = 'AUTH';
+        //this.user.name = this.userProfile.firstName || "";
+        //this.user.email = this.userProfile.email || "";
+        this.user.name = "admin";
+        this.user.email = "happy@example.com"
+        window.sessionStorage.setItem("userdetails",JSON.stringify(this.user));
     }
 
     // Get the roles required from the route.
